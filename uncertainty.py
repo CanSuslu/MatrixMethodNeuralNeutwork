@@ -4,8 +4,10 @@ import pandas as pd
 import numpy as np
 import json
 
-backg = ur.open('/cephfs/user/s6flkirf/master_thesis/codemasterthesis/finalScripts/classifier/plots/NarrowStrip/background_converted_NN_results.root')["SinglePhoton"].pandas.df()
-backg["y_predTight"] = ur.open('/cephfs/user/s6flkirf/master_thesis/codemasterthesis/finalScripts/classifier/plots/RelaxedTight/background_converted_NN_results.root')["SinglePhoton"]["y_pred"].array()
+backg = ur.open('/cephfs/user/s6flkirf/master_thesis/codemasterthesis/finalScripts/classifier/plots/NarrowStrip/bkg_converted_NN_results.root')["SinglePhoton"].pandas.df()
+backg["y_predTight"] = ur.open('/cephfs/user/s6flkirf/master_thesis/codemasterthesis/finalScripts/classifier/plots/RelaxedTight/bkg_converted_NN_results.root')["SinglePhoton"]["y_pred"].array()
+
+backg = backg.loc[backg["y_IsLoose"]==1]
 
 def dictgenerator(df, region, IsTrack):
     if IsTrack == True :
@@ -48,7 +50,7 @@ bEpsHat1234={"eta1": (N1234b_iso["eta1"]/N1234b["eta1"]), "eta2": (N1234b_iso["e
 bEpsHat3={"eta1": (N3b_iso["eta1"]/N3b["eta1"]), "eta2": (N3b_iso["eta2"]/N3b["eta2"]), "eta3": (N3b_iso["eta3"]/N3b["eta3"]), "eta4": (N3b_iso["eta4"]/N3b["eta4"])}
 bEpsHat234={"eta1": (N234b_iso["eta1"]/N234b["eta1"]), "eta2": (N234b_iso["eta2"]/N234b["eta2"]), "eta3": (N234b_iso["eta3"]/N234b["eta3"]), "eta4": (N234b_iso["eta4"]/N234b["eta4"])}
 
-DeltabEpsHatID={"eta1": abs(bEpsHatID["eta1"]-bEpsHat3["eta1"])/bEpsHatID["eta1"], "eta2": abs(bEpsHatID["eta2"]-bEpsHat3["eta2"])/bEpsHatID["eta2"], "eta3": abs(bEpsHatID["eta3"]-bEpsHat3["eta3"])/bEpsHatID["eta3"], "eta4": abs(bEpsHatID["eta4"]-bEpsHat3["eta4"])/bEpsHatID["eta4"]}
+DeltabEpsHatID={"eta1": abs(bEpsHatID["eta1"]-bEpsHat3["eta1"])/(bEpsHatID["eta1"]), "eta2": abs(bEpsHatID["eta2"]-bEpsHat3["eta2"])/bEpsHatID["eta2"], "eta3": abs(bEpsHatID["eta3"]-bEpsHat3["eta3"])/bEpsHatID["eta3"], "eta4": abs(bEpsHatID["eta4"]-bEpsHat3["eta4"])/bEpsHatID["eta4"]}
 DeltabEpsHat1234={"eta1": abs(bEpsHat1234["eta1"]-bEpsHat234["eta1"])/bEpsHat1234["eta1"], "eta2": abs(bEpsHat1234["eta2"]-bEpsHat234["eta2"])/bEpsHat1234["eta2"], "eta3": abs(bEpsHat1234["eta3"]-bEpsHat234["eta3"])/bEpsHat1234["eta3"], "eta4": abs(bEpsHat1234["eta4"]-bEpsHat234["eta4"])/bEpsHat1234["eta4"]}
 
 print(DeltabEpsHat1234)
